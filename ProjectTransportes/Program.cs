@@ -1,9 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using ProjectTransportes.Data;
+using ProjectTransportes.Helper;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Cache
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddMemoryCache();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IHttpContextAccessor
+    , HttpContextAccessor>();
 string connectionString = builder.Configuration.GetConnectionString("SqlHospital");
-builder.Services.AddDbContext<>
+builder.Services.AddSingleton<HelperPathProvider>();
+builder.Services.AddDbContext<CochesContext>(options=>options.UseSqlServer(connectionString));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
