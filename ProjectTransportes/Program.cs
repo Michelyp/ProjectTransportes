@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectTransportes.Data;
 using ProjectTransportes.Helper;
+using ProjectTransportes.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddSingleton<IHttpContextAccessor
     , HttpContextAccessor>();
 string connectionString = builder.Configuration.GetConnectionString("SqlHospital");
 builder.Services.AddSingleton<HelperPathProvider>();
+builder.Services.AddTransient<RepositoryCoches>();
 builder.Services.AddDbContext<CochesContext>(options=>options.UseSqlServer(connectionString));
 var app = builder.Build();
 
