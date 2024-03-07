@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectTransportes.Models;
 using ProjectTransportes.Repositories;
 
 namespace ProjectTransportes.Controllers
@@ -9,9 +10,11 @@ namespace ProjectTransportes.Controllers
         public CochesController(RepositoryCoches repo)
         {
             this.repo = repo;
+
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            //List<Coche> coches = await this.repo.GetCoches();
             return View();
         }
     }
