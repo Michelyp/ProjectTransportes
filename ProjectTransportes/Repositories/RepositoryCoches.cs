@@ -1,27 +1,22 @@
-﻿#region VISTAS
-//ALTER view V_COCHES_LISTA
+﻿#region VISTAS and PROCEDURE
+//alter view v_coches_lista
 //as
-//	select COCHE.IDCOCHE, COCHE.IMAGEN,
-//    COCHE.ASIENTOS, COCHE.MALETAS,
-//    COCHE.PUERTAS, COCHE.PRECIO,
-//    COCHE.ESTADOCOCHE,
-//    MODELO.NOMBRE AS MODEL, PUNTUACION.PUNTUACION,
-//    TIPOMOVILIDAD.NOMBRE AS TIPO, FILTROCOCHE.NOMBRE AS FILTRO,
-//    PROVINCIA.NOMBRE 
-
-//	FROM COCHE
-//	INNER JOIN MODELO
-//	ON  COCHE.IDMODELO=  MODELO.IDMODELO
-//	LEFT JOIN PUNTUACION
-//	ON COCHE.IDPUNTUACION = PUNTUACION.IDPUNTUACION
-//	INNER JOIN TIPOMOVILIDAD
-//	ON COCHE.TIPOMOVILIDAD = TIPOMOVILIDAD.IDTIPO
-//	INNER JOIN FILTROCOCHE
-//	ON COCHE.IDFILTRO = FILTROCOCHE.IDFILTRO
-//	LEFT JOIN PROVINCIA
-//	ON COCHE.IDPROVINCIA = PROVINCIA.IDPROVINCIA
+//	select coche.idcoche, coche.imagen,
+//    coche.asientos, coche.maletas,
+//    coche.puertas, coche.precio,
+//    coche.estadocoche,
+//    modelo.nombre as model, puntuacion.puntuacion
+//	from coche
+//	inner join modelo
+//	on  coche.idmodelo=  modelo.idmodelo
+//	left join puntuacion
+//	on coche.idpuntuacion = puntuacion.idpuntuacion
 //go
 
+//create procedure SP_ALL_COCHES
+//as
+//	select * from V_COCHES_LISTA
+//go
 #endregion
 using Microsoft.EntityFrameworkCore;
 using ProjectTransportes.Data;
@@ -40,8 +35,14 @@ namespace ProjectTransportes.Repositories
         }
         public async Task<List<Coche>> GetCoches()
         {
-            var coches = await this.context.Coches.ToListAsync();
-            return coches;
+            string sql = "SP_ALL_COCHES";
+            var consulta = this.context.Coches.FromSqlRaw(sql);
+            return await consulta.ToListAsync();
+        }
+        public List<Provincia> GetProvincias()
+        {
+            List<Provincia> provincias = this.context.Provincias.ToList();
+            return provincias;
         }
 
     }

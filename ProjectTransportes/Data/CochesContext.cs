@@ -8,5 +8,8 @@ namespace ProjectTransportes.Data
         public CochesContext(DbContextOptions<CochesContext>options)
             : base(options) { }
         public DbSet<Coche> Coches { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Provincia> Provincias { get; set; }
+
     }
 }
