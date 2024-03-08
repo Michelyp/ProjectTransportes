@@ -10,6 +10,6 @@ namespace ProjectTransportes.Data
         public DbSet<Coche> Coches { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Provincia> Provincias { get; set; }
-
+        public DbSet<Usuario> Usuarios { get; set; }
     }
 }

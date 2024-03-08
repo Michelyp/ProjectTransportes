@@ -5,17 +5,20 @@
 //    coche.asientos, coche.maletas,
 //    coche.puertas, coche.precio,
 //    coche.estadocoche,
-//    modelo.nombre as model, puntuacion.puntuacion
+//    modelo.nombre as model, puntuacion.puntuacion,
+//    coche.idprovincia, tipomovilidad.nombre as tipo_cambio
 //	from coche
 //	inner join modelo
 //	on  coche.idmodelo=  modelo.idmodelo
+//	inner join tipomovilidad
+//	on  coche.tipomovilidad=  tipomovilidad.idtipo
 //	left join puntuacion
 //	on coche.idpuntuacion = puntuacion.idpuntuacion
 //go
 
-//create procedure SP_ALL_COCHES
+//alter procedure sp_all_coches
 //as
-//	select * from V_COCHES_LISTA
+//	select * from v_coches_lista
 //go
 #endregion
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +46,11 @@ namespace ProjectTransportes.Repositories
         {
             List<Provincia> provincias = this.context.Provincias.ToList();
             return provincias;
+        }
+        public async Task<List<Coche>> CochesDispo() 
+        {
+            List<Coche> coches = await this.context.Coches.Where(x => x.EstadoCoche == true).ToListAsync();
+            return coches;
         }
 
     }

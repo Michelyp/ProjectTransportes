@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectTransportes.Models
 {
-    [Table("v_coches_lista")]
+    [Table("V_COCHES_LISTA")]
     public class Coche
     {
         [Key]
@@ -26,5 +26,9 @@ namespace ProjectTransportes.Models
         public string Modelo { get; set; }
         [Column("PUNTUACION")]
         public int? Puntuacion { get; set; }
+        [Column("IDPROVINCIA")]
+        public int Idprovincia { get; set; }
+        [Column("TIPO_CAMBIO")]
+        public string TipoCambio { get; set; }
     }
 }

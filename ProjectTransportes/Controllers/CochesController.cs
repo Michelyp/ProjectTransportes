@@ -14,7 +14,8 @@ namespace ProjectTransportes.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            List<Coche> coches = await this.repo.GetCoches();
+            
+            List<Coche> coches = await this.repo.CochesDispo();
             return View(coches);
         }
     }

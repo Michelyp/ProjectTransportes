@@ -20,12 +20,6 @@ namespace ProjectTransportes.Controllers
             ViewData["PROVINCIAS"] = provincias;
             return View();
         }
-        [HttpPost]
-        public IActionResult Index(int idprovincia)
-        {
-            return View();
-
-        }
 
     }
 }
