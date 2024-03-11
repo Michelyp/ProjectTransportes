@@ -1,0 +1,29 @@
+﻿<section>
+    <div class="container">
+        <div class="user signupBx">
+            <div class="formBx">
+                <form method="post">
+                    <h2>Crea una cuenta</h2>
+                    <input type="text" name="nombre" placeholder="Nombre" />
+                    <input type="text" name="apellido" placeholder="Apellido" />
+                    <input type="email" name="email" placeholder="Email " />
+                    <input type="password" name="password" placeholder="Contraseña" />
+                    <input type="number" name="telefono" placeholder="Teléfono" />
+                    <input type="submit" name="" value="Registrarse" />
+                    <p class="signup">
+                        Ya tienes una cuenta ?
+                        <a asp-controller="Usuario"
+                           asp-action="Index" style="color:cornflowerblue">
+                            Log In
+                        </a>
+                    </p>
+                </form>
+            </div>
+            <div class="imgBx"><img src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img2.jpg" alt="" /></div>
+        </div>
+    </div>
+    <h1 style="color:rebeccapurple">
+        @ViewData["MENSAJE"]
+    </h1>
+</section>
+

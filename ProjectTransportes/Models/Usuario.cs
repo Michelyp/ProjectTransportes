@@ -8,7 +8,7 @@ namespace ProjectTransportes.Models
     {
         [Key]
         [Column("IDUSUARIO")]
-        public int IdCoche { get; set; }
+        public int IdUsuario { get; set; }
         [Column("NOMBRE")]
         public string Nombre { get; set; }
         [Column("APELLIDO")]
@@ -16,14 +16,19 @@ namespace ProjectTransportes.Models
         [Column("CORREO")]
         public string Correo { get; set; }
         [Column("PASS")]
-        public string Password { get; set; }
+        public byte[] Password { get; set; }
         [Column("TELEFONO")]
         public int Telefono { get; set; }
         [Column("IDROL")]
         public int IdRol { get; set; }
         [Column("IDFACTURACION")]
-        public int IdFacturacion { get; set; }
-
+        public int? IdFacturacion { get; set; }
+        [Column("SALT")]
+        public string Salt { get; set; }
+        [Column("ESTADO")]
+        public Boolean? EstadoUsuario { get; set; }
+        [Column("IDRESERVA")]
+        public int IdReserva { get; set; }
 
     }
 }

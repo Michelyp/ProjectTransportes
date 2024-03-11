@@ -23,7 +23,9 @@
 #endregion
 using Microsoft.EntityFrameworkCore;
 using ProjectTransportes.Data;
+using ProjectTransportes.Helper;
 using ProjectTransportes.Models;
+using System.Security.AccessControl;
 
 namespace ProjectTransportes.Repositories
 {
@@ -36,6 +38,7 @@ namespace ProjectTransportes.Repositories
         {
             this.context = context;
         }
+        #region COCHES
         public async Task<List<Coche>> GetCoches()
         {
             string sql = "SP_ALL_COCHES";
@@ -52,6 +55,63 @@ namespace ProjectTransportes.Repositories
             List<Coche> coches = await this.context.Coches.Where(x => x.EstadoCoche == true).ToListAsync();
             return coches;
         }
+        #endregion
+        #region USUARIOS
+        private async Task<int> GetMaxIdUsuarioAsync()
+        {
+            if (this.context.Usuarios.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return await this.context.Usuarios.MaxAsync(Z => Z.IdUsuario) + 1;
+            }
+        }
+        public async Task RegisterUserAsync(string nombre,string apellido, string email, string password, int telefono)
+        {
+            Usuario user = new Usuario();
+            user.IdUsuario = await this.GetMaxIdUsuarioAsync();
+            user.Nombre = nombre;
+            user.Apellido = apellido;
+            user.Correo = email;
+            user.Password =  HelperCryptography.EncryptPassword(password, user.Salt);
+            user.Telefono = telefono;
+            user.IdRol = 2;
+            user.IdFacturacion = 1;
+            user.Salt = HelperTools.GenerateSalt();
+            user.EstadoUsuario = true;
+            user.IdReserva= 1;
+            this.context.Usuarios.Add(user);
+            await this.context.SaveChangesAsync();
+        
+        }
+        public async Task<Usuario> LoginUserAsync(string email, string password)
+        {
+            Usuario user = await this.context.Usuarios.FirstOrDefaultAsync(x=> x.Correo == email);
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                string salt = user.Salt;
+                byte[]temp = HelperCryptography.EncryptPassword(password, salt);
+                byte[] passUser = user.Password;
+                bool response = HelperTools.CompareArrays(temp, passUser);
+                if (response == true)
 
+                {
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+
+        #endregion
     }
 }
