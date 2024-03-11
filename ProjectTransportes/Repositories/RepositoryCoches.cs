@@ -75,13 +75,12 @@ namespace ProjectTransportes.Repositories
             user.Nombre = nombre;
             user.Apellido = apellido;
             user.Correo = email;
+            user.Salt = HelperTools.GenerateSalt();
             user.Password =  HelperCryptography.EncryptPassword(password, user.Salt);
             user.Telefono = telefono;
             user.IdRol = 2;
             user.IdFacturacion = 1;
-            user.Salt = HelperTools.GenerateSalt();
             user.EstadoUsuario = true;
-            user.IdReserva= 1;
             this.context.Usuarios.Add(user);
             await this.context.SaveChangesAsync();
         

@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Cache
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddMemoryCache();
-
+builder.Services.AddSession();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IHttpContextAccessor
@@ -30,7 +30,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.UseRouting();
+app.UseSession();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",

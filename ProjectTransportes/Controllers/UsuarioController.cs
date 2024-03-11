@@ -18,6 +18,7 @@ namespace ProjectTransportes.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password)
         {
             Usuario user = await this.repo.LoginUserAsync(email, password);
@@ -40,6 +41,7 @@ namespace ProjectTransportes.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(string nombre, string apellido, string email, string password, int telefono)
         {
             await this.repo.RegisterUserAsync(nombre, apellido, email, password, telefono);
