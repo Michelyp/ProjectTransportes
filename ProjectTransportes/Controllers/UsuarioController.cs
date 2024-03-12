@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectTransportes.Models;
 using ProjectTransportes.Repositories;
+using ProjectTransportes.Extensions;
 
 namespace ProjectTransportes.Controllers
 {
@@ -29,7 +30,10 @@ namespace ProjectTransportes.Controllers
                 return View();
             }else
             {
-                HttpContext.Session.SetString("USUARIO", user.Nombre);
+                HttpContext.Session.SetObject("USUARIO", user);
+                HttpContext.Session.SetString("NOMBRE", user.Nombre);
+                HttpContext.Session.SetString("IDROL", user.IdRol.ToString());
+                HttpContext.Session.SetString("IDUSUARIO", user.IdUsuario.ToString());
                 return RedirectToAction("Register");
 
             }
@@ -48,6 +52,13 @@ namespace ProjectTransportes.Controllers
             ViewData["MENSAJE"] = "Usuario registrado correctamente";
             return RedirectToAction("Login");
         }
+
+        public async Task<IActionResult> PerfilUsuario(int id)
+        {
+            Usuario user = await this.repo.FindUsuario(id);
+            return View();
+        }
+
 
 
     }

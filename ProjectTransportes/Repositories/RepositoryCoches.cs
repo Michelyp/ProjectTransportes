@@ -20,6 +20,19 @@
 //as
 //	select * from v_coches_lista
 //go
+
+
+//create view V_ALL_USUARIOS
+//as
+//select * from USUARIOS where IDROL = 2
+//go
+
+
+//create procedure SP_ALL_USUARIOS
+//as
+//	select * from V_ALL_USUARIOS
+//go
+
 #endregion
 using Microsoft.EntityFrameworkCore;
 using ProjectTransportes.Data;
@@ -110,6 +123,42 @@ namespace ProjectTransportes.Repositories
             }
         }
 
+        public async Task<Usuario> FindUsuario(int id)
+        {
+            return await this.context.Usuarios.Where(z => z.IdUsuario.Equals(id)).FirstOrDefaultAsync();
+        }
+        #endregion
+
+        #region ADMIN
+        public async Task<List<Usuario>> GetUsuarios()
+        {
+            string sql = "SP_ALL_USUARIOS";
+            var consulta = this.context.Usuarios.FromSqlRaw(sql);
+            return await consulta.ToListAsync();
+        }
+
+        public async Task<List<Reserva>> GetRervas()
+        {
+            List<Reserva> reservas = this.context.Reservas.ToList();
+            return reservas;
+        }
+        //Agregar nuevo Coche
+      //  SELECT TOP(1000) [IDCOCHE]
+      //,[IDMODELO]
+      //,[IDPUNTUACION]
+      //,[TIPOMOVILIDAD]
+      //,[IDFILTRO]
+      //,[IMAGEN]
+      //,[ESTADOCOCHE]
+      //,[IDPROVINCIA]
+      //,[ASIENTOS]
+      //,[MALETAS]
+      //,[PUERTAS]
+      //,[PRECIO]
+      //  FROM[transportes].[dbo].[COCHE]
+
+        #endregion
+        #region RESERVAS
 
         #endregion
     }

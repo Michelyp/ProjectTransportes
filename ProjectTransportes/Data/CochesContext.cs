@@ -11,6 +11,8 @@ namespace ProjectTransportes.Data
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Provincia> Provincias { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+
+        public DbSet<Reserva> Reservas { get; set; }
         
     }
 }

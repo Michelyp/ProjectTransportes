@@ -2,7 +2,7 @@
 
 namespace ProjectTransportes.Extensions
 {
-    public static class SessionExtensions
+    public static class SessionExtension
     {
         public static T GetObject<T> (this ISession session, string key)
         {
