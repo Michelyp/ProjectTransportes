@@ -1,10 +1,19 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using ProjectTransportes.Data;
 using ProjectTransportes.Helper;
 using ProjectTransportes.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme =
+    CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme =
+    CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme =
+    CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie();
 //Cache
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddMemoryCache();
@@ -17,6 +26,7 @@ string connectionString = builder.Configuration.GetConnectionString("SqlHospital
 builder.Services.AddSingleton<HelperPathProvider>();
 builder.Services.AddTransient<RepositoryCoches>();
 builder.Services.AddDbContext<CochesContext>(options=>options.UseSqlServer(connectionString));
+builder.Services.AddControllersWithViews(options => options.EnableEndpointRouting = false);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,8 +42,13 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseMvc(routes =>
+{
+    routes.MapRoute(
+        name: "default",
+        template: "{controller=Home}/{action=Index}/{id?}");
+});
 app.Run();
