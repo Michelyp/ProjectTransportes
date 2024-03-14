@@ -15,22 +15,29 @@
 //	left join puntuacion
 //	on coche.idpuntuacion = puntuacion.idpuntuacion
 //go
-
 //alter procedure sp_all_coches
 //as
 //	select * from v_coches_lista
 //go
 
 
-//create view V_ALL_USUARIOS
+//create view v_all_usuarios
 //as
-//select * from USUARIOS where IDROL = 2
+//	select USUARIOS.IDUSUARIO, USUARIOS.NOMBRE, USUARIOS.APELLIDO,
+//    USUARIOS.CORREO, USUARIOS.SALT, USUARIOS.PASS, USUARIOS.TELEFONO,
+//    ROLES.NOMBRE AS ROL, ESTADOUSUARIO.NOMBRE AS ESTADO
+
+//	from USUARIOS
+//	inner join ESTADOUSUARIO
+//	on USUARIOS.ESTADO  = ESTADOUSUARIO.IDESTADO
+//	inner join ROLES
+//	on USUARIOS.IDROL = ROLES.IDROL
 //go
 
 
-//create procedure SP_ALL_USUARIOS
+//create procedure sp_all_usuarios
 //as
-//	select * from V_ALL_USUARIOS
+//	select * from v_all_usuarios
 //go
 
 #endregion
@@ -91,9 +98,8 @@ namespace ProjectTransportes.Repositories
             user.Salt = HelperTools.GenerateSalt();
             user.Password =  HelperCryptography.EncryptPassword(password, user.Salt);
             user.Telefono = telefono;
-            user.IdRol = 1;
-            user.IdFacturacion = 1;
-            user.EstadoUsuario = true;
+            user.Rol = "";
+            user.EstadoUsuario = "";
             this.context.Usuarios.Add(user);
             await this.context.SaveChangesAsync();
         

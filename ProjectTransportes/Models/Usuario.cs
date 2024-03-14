@@ -21,12 +21,10 @@ namespace ProjectTransportes.Models
         public byte[] Password { get; set; }
         [Column("TELEFONO")]
         public int Telefono { get; set; }
-        [Column("IDROL")]
-        public int IdRol { get; set; }
-        [Column("IDFACTURACION")]
-        public int? IdFacturacion { get; set; }
+        [Column("ROL")]
+        public string? Rol { get; set; }
         [Column("ESTADO")]
-        public Boolean? EstadoUsuario { get; set; }
+        public string? EstadoUsuario { get; set; }
 
     }
 }
