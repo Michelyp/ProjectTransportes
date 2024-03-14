@@ -15,69 +15,62 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md bg-body-tertiary">
-            <div class="container-xl">
-                <a class="navbar-brand" href="#">
-                    <img src="https://codingyaar.com/wp-content/uploads/coding-yaar-logo.png" alt="">
-                </a>
-             
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active text-dark" asp-area="" asp-controller="Managed" asp-action="PanelAdmin">Managed</a>
-                        </li>
-                      
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Gestionar mi reserva</a>
-                        </li>
-                        <li>
-                            <div class="search-and-icons">
-                           
-                                <div class="user-icons d-flex mb-2">
-                                    <div class="profile">
-                                       
-                     
-                                     <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Login">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                                            </svg>
-                                     </a>
-                                       
-                                    </div>
-                                    <div class="wishlist">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
-                                        </svg>
-                                    </div>
+        @{
+            int idRol = Context.Session.GetObject<int>("idrol");
+        }
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            @if (idRol == 1)
+            {
+                <partial name="_MenuAdmin" />
+            }
+            else
+            if(idRol==2)
+            {
+                <nav class="navbar navbar-expand-md bg-body-tertiary">
+                    <div class="container-xl">
+                        <a class="navbar-brand" href="#">
+                            <img src="https://codingyaar.com/wp-content/uploads/coding-yaar-logo.png" alt="">
+                        </a>
 
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    
-                   
-                </div>
-            </div>
-        </nav>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Gestionar mi reserva</a>
+                                </li>
+                                <li>
+                                    <div class="search-and-icons">
+
+                                        <div class="user-icons d-flex mb-2">
+                                            <div class="profile">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Managed" asp-action="Login">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <div class="wishlist">
+                                                <partial name="_MenuUsuario" />
+                                                @*  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                                        </svg> *@
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            }
+        }       
     </header>
     <div class="container">
 
@@ -86,11 +79,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - ProjectTransportes - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery-3.6.1.min.js"></script>
 

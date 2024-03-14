@@ -91,7 +91,7 @@ namespace ProjectTransportes.Repositories
             user.Salt = HelperTools.GenerateSalt();
             user.Password =  HelperCryptography.EncryptPassword(password, user.Salt);
             user.Telefono = telefono;
-            user.IdRol = 2;
+            user.IdRol = 1;
             user.IdFacturacion = 1;
             user.EstadoUsuario = true;
             this.context.Usuarios.Add(user);

@@ -14,6 +14,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme =
     CookieAuthenticationDefaults.AuthenticationScheme;
 }).AddCookie();
+
 //Cache
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddMemoryCache();
@@ -41,6 +42,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
+
+app.UseAuthentication();
 app.UseAuthorization();
 //app.MapControllerRoute(
 //    name: "default",

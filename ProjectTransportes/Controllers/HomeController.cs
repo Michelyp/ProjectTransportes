@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectTransportes.Filters;
 using ProjectTransportes.Models;
 using ProjectTransportes.Repositories;
 using System.Diagnostics;
@@ -14,6 +15,7 @@ namespace ProjectTransportes.Controllers
             this.repo = repo;
 
         }
+        [AuthorizeUsers]
         public IActionResult Index()
         {
             List<Provincia> provincias =  this.repo.GetProvincias();

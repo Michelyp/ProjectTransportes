@@ -22602,7 +22602,7 @@ hr.horizontal {
     .navbar-vertical.navbar-expand-xs .navbar-collapse {
         display: block;
         overflow: auto;
-        height: calc(100vh - 300px);
+        height: calc(100vh - 100px);
     }
 
     .navbar-vertical.navbar-expand-xs > [class*="container"] {
@@ -22690,7 +22690,7 @@ hr.horizontal {
         .navbar-vertical.navbar-expand-sm .navbar-collapse {
             display: block;
             overflow: auto;
-            height: calc(100vh - 300px);
+            height: calc(100vh - 100px);
         }
 
         .navbar-vertical.navbar-expand-sm > [class*="container"] {
@@ -22781,7 +22781,7 @@ hr.horizontal {
         .navbar-vertical.navbar-expand-md .navbar-collapse {
             display: block;
             overflow: auto;
-            height: calc(100vh - 300px);
+            height: calc(100vh - 100px);
         }
 
         .navbar-vertical.navbar-expand-md > [class*="container"] {
@@ -22872,7 +22872,7 @@ hr.horizontal {
         .navbar-vertical.navbar-expand-lg .navbar-collapse {
             display: block;
             overflow: auto;
-            height: calc(100vh - 300px);
+            height: calc(100vh - 100px);
         }
 
         .navbar-vertical.navbar-expand-lg > [class*="container"] {
@@ -22963,7 +22963,7 @@ hr.horizontal {
         .navbar-vertical.navbar-expand-xl .navbar-collapse {
             display: block;
             overflow: auto;
-            height: calc(100vh - 300px);
+            height: calc(100vh - 100px);
         }
 
         .navbar-vertical.navbar-expand-xl > [class*="container"] {
@@ -23054,7 +23054,7 @@ hr.horizontal {
         .navbar-vertical.navbar-expand-xxl .navbar-collapse {
             display: block;
             overflow: auto;
-            height: calc(100vh - 300px);
+            height: calc(100vh - 100px);
         }
 
         .navbar-vertical.navbar-expand-xxl > [class*="container"] {
