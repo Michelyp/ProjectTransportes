@@ -4,31 +4,34 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectTransportes.Models
 {
-    [Table("V_COCHES_LISTA")]
+    [Table("COCHE")]
     public class Coche
     {
         [Key]
         [Column("IDCOCHE")]
         public int IdCoche { get; set; }
+        [Column("IDMODELO")]
+        public int IdModelo { get; set; }
+        [Column("IDPUNTUACION")]
+        public int? Puntuacion { get; set; }
+        [Column("TIPOMOVILIDAD")]
+        public int TipoMovilidad { get; set; }
+        [Column("IDFILTRO")]
+        public int Filtro { get; set; }
         [Column("IMAGEN")]
-        public string? Imagen { get; set; }
-        [Column("ASIENTOS")]
-        public int Asientos { get; set; }
-        [Column("MALETAS")]
-        public int Maletas { get; set; }
-        [Column("PUERTAS")]
-        public int Puertas { get; set; }
-        [Column("PRECIO")]
-        public int Precio { get; set; }
+        public string Imagen { get; set; }
         [Column("ESTADOCOCHE")]
         public Boolean? EstadoCoche { get; set; }
-        [Column("MODEL")]
-        public string Modelo { get; set; }
-        [Column("PUNTUACION")]
-        public int? Puntuacion { get; set; }
         [Column("IDPROVINCIA")]
-        public int Idprovincia { get; set; }
-        [Column("TIPO_CAMBIO")]
-        public string TipoCambio { get; set; }
+        public int IdProvincia { get; set; }
+        [Column("Asientos")]
+        public string Asientos { get; set; }
+        [Column("Maletas")]
+        public int? Maletas { get; set; }
+        [Column("Puertas")]
+        public int Puertas { get; set; }
+        [Column("Precio")]
+        public int Precio { get; set; }
+        
     }
 }

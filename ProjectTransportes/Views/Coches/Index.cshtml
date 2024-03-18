@@ -1,6 +1,6 @@
-﻿@model List<Coche>
+﻿@model List<CocheVista>
 <div class="container">
-    @foreach (Coche item in Model)
+    @foreach (CocheVista item in Model)
     {
         <article class="card card--1" style="margin:2rem; background-image:url(@item.Imagen);  background-size: cover;background-position: center center;">
             <div class="card__info-hover">
@@ -26,7 +26,7 @@
 
             </div>
             <div class="card__img"></div>
-            <a href="#" class="card_link">
+            <a asp-controller="Reservas" class="card-link" asp-action="Index" asp-route-id="@item.IdCoche">
                 <div class="card__img--hover"></div>
             </a>
             <div class="card__info">
@@ -36,7 +36,8 @@
                 <span class="card__by">Precio
                     <a asp-controller="Reservas"
                        class="card__author"
-                       asp-action="Index">
+                       asp-action="Index"
+                       asp-route-id="@item.IdCoche">
                         @item.Precio €/día</a></span>
             </div>
         </article>
