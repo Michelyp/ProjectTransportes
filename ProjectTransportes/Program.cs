@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using ProjectTransportes.Data;
 using ProjectTransportes.Helper;
-using ProjectTransportes.Repositories;
-
-var builder = WebApplication.CreateBuilder(args);
+using ProjectTransportes.Repositories;var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme =
@@ -59,6 +57,6 @@ app.UseMvc(routes =>
 {
     routes.MapRoute(
         name: "default",
-        template: "{controller=Home}/{action=Index}/{id?}");
+        template: "{controller=Managed}/{action=Login}/{id?}");
 });
 app.Run();

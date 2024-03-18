@@ -17,7 +17,7 @@ namespace ProjectTransportes.Models
         [Column("CIUDAD")]
         public string Ciudad { get; set; }
         [Column("CODIGOPOSTAL")]
-        public string CodigoPostal { get; set; }
+        public int CodigoPostal { get; set; }
         [Column("PAIS")]
         public string Pais { get; set; }
     }

@@ -121,7 +121,7 @@ namespace ProjectTransportes.Repositories
         public async Task CrearCocheAsync(string nombre, string apellido, string email, string password, int telefono)
         {
             Usuario user = new Usuario();
-            user.IdUsuario = await this.GetMaxIdUsuarioAsync();
+            user.IdUsuario = await this.GetMaxIdCocheAsync();
             user.Nombre = nombre;
             user.Apellido = apellido;
             user.Correo = email;
@@ -245,22 +245,75 @@ namespace ProjectTransportes.Repositories
             return reservas;
         }
         //Agregar nuevo Coche
-      //  SELECT TOP(1000) [IDCOCHE]
-      //,[IDMODELO]
-      //,[IDPUNTUACION]
-      //,[TIPOMOVILIDAD]
-      //,[IDFILTRO]
-      //,[IMAGEN]
-      //,[ESTADOCOCHE]
-      //,[IDPROVINCIA]
-      //,[ASIENTOS]
-      //,[MALETAS]
-      //,[PUERTAS]
-      //,[PRECIO]
-      //  FROM[transportes].[dbo].[COCHE]
+        //  SELECT TOP(1000) [IDCOCHE]
+        //,[IDMODELO]
+        //,[IDPUNTUACION]
+        //,[TIPOMOVILIDAD]
+        //,[IDFILTRO]
+        //,[IMAGEN]
+        //,[ESTADOCOCHE]
+        //,[IDPROVINCIA]
+        //,[ASIENTOS]
+        //,[MALETAS]
+        //,[PUERTAS]
+        //,[PRECIO]
+        //  FROM[transportes].[dbo].[COCHE]
 
         #endregion
         #region RESERVAS
+        private async Task<int> GetMaxIdReservaAsync()
+        {
+            if (this.context.Reservas.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return await this.context.Reservas.MaxAsync(Z => Z.IdReserva) + 1;
+            }
+        }
+        public async Task CrearReservaAsync(string lugar, string conductor, TimeSpan horainit, DateTime fechainit
+            ,DateTime fechafinal, TimeSpan horafinal,int idcoche, int idusuario, int estadoreserva)
+        {
+            Reserva reser = new Reserva();
+            reser.IdReserva = await this.GetMaxIdReservaAsync();
+            reser.Lugar = lugar;
+            reser.Conductor = conductor;
+            reser.HoraInicial = horainit;
+            reser.FechaRecogida = fechainit;
+            reser.FechaDevolucion = fechafinal;
+            reser.HoraFinal = horafinal;
+            reser.IdCoche = idcoche;
+            reser.IdUsuario = idusuario;
+            reser.IdEstadpReserva = 1;
+            this.context.Reservas.Add(reser);
+            await this.context.SaveChangesAsync();
+        }
+
+        private async Task<int> GetMaxFacturacionAsync()
+        {
+            if (this.context.Facturaciones.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return await this.context.Facturaciones.MaxAsync(Z => Z.IdFacturacion) + 1;
+            }
+        }
+        public async Task CrearFacturacionAsync(string nombre, string direccion,string ciudad, int codigopostal, string pais)
+        {
+            Facturacion fact = new Facturacion();
+            fact.IdFacturacion = await this.GetMaxFacturacionAsync();
+            fact.Nombre = nombre;
+            fact.Direccion= direccion;
+            fact.Ciudad = ciudad;
+            fact.CodigoPostal = codigopostal;
+            fact.Pais= pais;
+            
+            this.context.Facturaciones.Add(fact);
+            await this.context.SaveChangesAsync();
+        }
 
         #endregion
     }

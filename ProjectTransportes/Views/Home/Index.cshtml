@@ -6,15 +6,15 @@
     List<Provincia> provincias = ViewData["PROVINCIAS"] as List<Provincia>;
 }
 <div class="container" >
-    <div style="margin:2rem;"><img src="images/svgs/undraw_authentication.svg" style="width:400px"/></div>
+    <div style="margin:2rem;"><img src="~/images/svgs/undraw_authentication.svg" style="width:400px"/></div>
     <div class="container" style="width: 66%">
         <form id="contact" action="" method="post">
             <h4>RECOGER EN</h4>
             <fieldset>
-                <select id="profissao" name="idprovincia">
+                <select id="profissao" name="provincia">
                     @foreach(Provincia prov in provincias)
                     {
-                        <option value="@prov.IdProvincia">@prov.Nombre</option>
+                        <option value="@prov.Nombre">@prov.Nombre</option>
                     }
                 </select>
             </fieldset>
@@ -24,11 +24,11 @@
                     <div class="pa__middle-range">
                         <div class="pa__middle-item">
                             <label class="titulo">DESDE: </label>
-                            <input style="border-radius: 5px;border-color: azure;" type="date" value="2024-03-18" min="2021" max="2019-01-01">
+                            <input style="border-radius: 5px;border-color: azure;" name="fechainit" type="date" value="2024-03-18" min="2024" max="">
                             <span ></span>
                         </div>
                         <div class="pa__middle-item">
-                            <input style="border-radius: 5px;border-color: azure;" type="time" id="tiempo" name="tiempo" step="1800">
+                            <input style="border-radius: 5px;border-color: azure;" type="time" id="tiempo" name="horainit" step="1800">
                             <span ></span>
                         </div>
                         <div class="pa__middle-item2">
@@ -38,11 +38,11 @@
                         </div>
                         <div class="pa__middle-item">
                             <label class="titulo">HASTA: </label>
-                            <input style="border-radius: 5px;border-color: azure;" type="date" value="2024-03-18" min="2021" max="">
+                            <input style="border-radius: 5px;border-color: azure;" name="fechafin"  type="date" value="2024-03-18" min="2021" max="">
                             <span ></span>
                         </div>
                         <div class="pa__middle-item">
-                            <input style="border-radius: 5px;border-color: azure;" type="time" id="tiempo" name="tiempo" step="1800">
+                            <input style="border-radius: 5px;border-color: azure;" type="time" name="horafin" step="1800">
                             <span style="color:#017366"></span>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <label for="maybe-radio">Otros</label>
                     </fieldset>
                     <fieldset>
-                        <input type="checkbox" id="yes" />
+                        <input type="checkbox" name="conductor" id="yes" />
                         <label for="yes">Conductor mayor de 25 años</label>
                     </fieldset>
 
@@ -66,10 +66,10 @@
             <fieldset style="text-align:center">
                 
                 <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">
-                    <a asp-controller="Coches"
-                       asp-action="Index" style="color:aliceblue; text-decoration:none">
+                    @* <a asp-controller="Coches"
+                       asp-action="Index" style="color:aliceblue; text-decoration:none"> *@
                         BUSCAR
-                    </a>
+                    @* </a> *@
                 </button>
             </fieldset>
         </form>

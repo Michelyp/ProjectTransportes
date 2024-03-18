@@ -13,16 +13,18 @@ namespace ProjectTransportes.Models
         [Column("CONDUCTOR")]
         public string Conductor { get; set; }
         [Column("HORAINICIAL")]
-        public DateTime HoraInicial { get; set; }
+        public TimeSpan HoraInicial { get; set; }
         [Column("FECHARECOGIDA")]
         public DateTime FechaRecogida { get; set; }
         [Column("FECHADEVOLUCION")]
-        public DateTime FECHADEVOLUCION { get; set; }
+        public DateTime FechaDevolucion { get; set; }
         [Column("HORAFINAL")]
-        public DateTime HORAFINAL { get; set; }
+        public TimeSpan HoraFinal { get; set; }
         [Column("IDCOCHE")]
         public int IdCoche { get; set; }
         [Column("IDUSUARIO")]
         public int IdUsuario { get; set; }
+        [Column("IDESTADORESERVA")]
+        public int IdEstadpReserva { get; set; }
     }
 }

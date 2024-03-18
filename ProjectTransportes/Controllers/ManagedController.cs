@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectTransportes.Extensions;
 using ProjectTransportes.Models;
 using ProjectTransportes.Repositories;
+using System;
 using System.Security.Claims;
 
 namespace ProjectTransportes.Controllers
@@ -43,26 +44,32 @@ namespace ProjectTransportes.Controllers
                 identity.AddClaim(claimIdentifier);
                 Claim claimIdRol = new Claim(ClaimTypes.Role, user.IdRol.ToString());
                 identity.AddClaim(claimIdRol);
+                ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal);
 
                 if (user.IdRol == 1)
                 {
                     identity.AddClaim(new Claim("Administrador", "Admin Supremo"));
-                }else if (user.IdRol==2)
-                {
+                    return RedirectToAction("PanelAdmin", "Administrador");
+
+
+                }
+                else                 {
                     identity.AddClaim(new Claim("Usuario", "User"));
+                    return RedirectToAction("Index", "Home");
+
+
 
                 }
 
-                ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal);
-                string controller = TempData["controller"].ToString();
-                string action = TempData["action"].ToString();
 
-                return RedirectToAction(action, controller);
+                //string controller = TempData["controller"].ToString();
+                //string action = TempData["action"].ToString();
 
+                //return RedirectToAction(action, controller);
             }
-            }
-        
+        }
+
 
         public IActionResult Register()
         {
@@ -72,7 +79,7 @@ namespace ProjectTransportes.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(string nombre, string apellido, string email, string password, int telefono)
         {
-            await this.repo.RegisterUserAsync( nombre, apellido, email, password, telefono);
+            await this.repo.RegisterUserAsync(nombre, apellido, email, password, telefono);
             ViewData["MENSAJE"] = "Usuario registrado correctamente";
             return RedirectToAction("Login");
         }

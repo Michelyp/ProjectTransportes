@@ -10,15 +10,15 @@ namespace ProjectTransportes.Filters
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var user = context.HttpContext.User;
-            string controller = context.RouteData.Values["controller"].ToString();
-            string action = context.RouteData.Values["action"].ToString();
-            ITempDataProvider provider = context.HttpContext.RequestServices.GetService<ITempDataProvider>();
-            //Esta clase contiene en su interior el tempdata de nuestra app
-            var TempData = provider.LoadTempData(context.HttpContext);
-            TempData["controller"] = controller;
-            TempData["action"] = action;
-            provider.SaveTempData(context.HttpContext, TempData);
-            if (!user.Identity.IsAuthenticated==false)
+            //string controller = context.RouteData.Values["controller"].ToString();
+            //string action = context.RouteData.Values["action"].ToString();
+            //ITempDataProvider provider = context.HttpContext.RequestServices.GetService<ITempDataProvider>();
+            ////Esta clase contiene en su interior el tempdata de nuestra app
+            //var TempData = provider.LoadTempData(context.HttpContext);
+            //TempData["controller"] = controller;
+            //TempData["action"] = action;
+            //provider.SaveTempData(context.HttpContext, TempData);
+            if (user.Identity.IsAuthenticated==false)
             {
                 context.Result = this.GetRoute("Managed", "Login");
             }
