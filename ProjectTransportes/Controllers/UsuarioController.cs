@@ -14,7 +14,12 @@ namespace ProjectTransportes.Controllers
             this.repo = repo;
         }
 
-        public IActionResult Usuarios()
+        public async Task<IActionResult> Usuarios()
+        {
+            List<UsuarioVista> usuarios = await this.repo.GetUsuarios();
+            return View(usuarios);
+        }
+        public IActionResult Perfil()
         {
             return View();
         }
@@ -24,8 +29,11 @@ namespace ProjectTransportes.Controllers
             Usuario user = await this.repo.FindUsuario(id);
             return View();
         }
-
-
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.repo.DeleteUsuarioAsync(id);
+            return RedirectToAction("Usuarios", "Usuario");
+        }
 
     }
 }

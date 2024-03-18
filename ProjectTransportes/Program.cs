@@ -13,7 +13,12 @@ builder.Services.AddAuthentication(options =>
     CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme =
     CookieAuthenticationDefaults.AuthenticationScheme;
-}).AddCookie();
+}).AddCookie(
+    CookieAuthenticationDefaults.AuthenticationScheme,
+    config =>
+    {
+        config.AccessDeniedPath = "/Managed/ErrorAcceso";
+    });
 
 //Cache
 builder.Services.AddDistributedMemoryCache();
@@ -27,7 +32,9 @@ string connectionString = builder.Configuration.GetConnectionString("SqlHospital
 builder.Services.AddSingleton<HelperPathProvider>();
 builder.Services.AddTransient<RepositoryCoches>();
 builder.Services.AddDbContext<CochesContext>(options=>options.UseSqlServer(connectionString));
-builder.Services.AddControllersWithViews(options => options.EnableEndpointRouting = false);
+builder.Services.AddControllersWithViews(options => options.EnableEndpointRouting = false).AddSessionStateTempDataProvider();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

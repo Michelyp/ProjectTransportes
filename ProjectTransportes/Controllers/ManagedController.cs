@@ -22,7 +22,6 @@ namespace ProjectTransportes.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password)
         {
             Usuario user = await this.repo.LoginUserAsync(email, password);
@@ -34,7 +33,6 @@ namespace ProjectTransportes.Controllers
             }
             else
             {
-                HttpContext.Session.SetObject("idrol", user.IdRol);
                 ClaimsIdentity identity = new ClaimsIdentity(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     ClaimTypes.Name, ClaimTypes.Role);
@@ -46,21 +44,25 @@ namespace ProjectTransportes.Controllers
                 Claim claimIdRol = new Claim(ClaimTypes.Role, user.IdRol.ToString());
                 identity.AddClaim(claimIdRol);
 
+                if (user.IdRol == 1)
+                {
+                    identity.AddClaim(new Claim("Administrador", "Admin Supremo"));
+                }else if (user.IdRol==2)
+                {
+                    identity.AddClaim(new Claim("Usuario", "User"));
+
+                }
+
                 ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal);
+                string controller = TempData["controller"].ToString();
+                string action = TempData["action"].ToString();
 
-                //var roles = await _userManager.GetRolesAsync(user);
-                //if (roles.Contains("1"))
-                //{
-                    return RedirectToAction("PanelAdmin", "Administrador");
-                //}else if (roles.Contains("2"))
-                //{
-                //    return RedirectToAction("Index", "Home");
-
-                //}
+                return RedirectToAction(action, controller);
 
             }
-        }
+            }
+        
 
         public IActionResult Register()
         {
@@ -68,12 +70,15 @@ namespace ProjectTransportes.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(string nombre, string apellido, string email, string password, int telefono)
         {
-            await this.repo.RegisterUserAsync(nombre, apellido, email, password, telefono);
+            await this.repo.RegisterUserAsync( nombre, apellido, email, password, telefono);
             ViewData["MENSAJE"] = "Usuario registrado correctamente";
             return RedirectToAction("Login");
+        }
+        public IActionResult ErrorAcceso()
+        {
+            return View();
         }
         public async Task<IActionResult> Logout()
         {

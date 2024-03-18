@@ -15,8 +15,19 @@ namespace ProjectTransportes.Controllers
         public async Task<IActionResult> Index()
         {
             
-            List<Coche> coches = await this.repo.CochesDispo();
+            List<CocheVista> coches = await this.repo.CochesDispo();
             return View(coches);
+        }
+        public async Task<IActionResult> Coches()
+        {
+
+            List<CocheVista> coches = await this.repo.CochesDispo();
+            return View(coches);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.repo.DeleteCocheAsync(id);
+            return RedirectToAction("Coches", "Coches");
         }
     }
 }
