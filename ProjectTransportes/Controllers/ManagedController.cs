@@ -64,19 +64,9 @@ namespace ProjectTransportes.Controllers
                     identity.AddClaim(new Claim("Usuario", "User"));
                     return RedirectToAction("Index", "Home");
 
-
-
                 }
-
-
-                //string controller = TempData["controller"].ToString();
-                //string action = TempData["action"].ToString();
-
-                //return RedirectToAction(action, controller);
             }
         }
-
-
         public IActionResult Register()
         {
             return View();

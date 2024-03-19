@@ -46,5 +46,10 @@ namespace ProjectTransportes.Controllers
             List<ReservaVista> reservas = await this.repo.GetReservas();
             return View(reservas);
         }
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.repo.DeleteReservaAsync(id);
+            return RedirectToAction("Reservas", "Reservas");
+        }
     }
 }
