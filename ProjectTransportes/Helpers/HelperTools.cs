@@ -1,4 +1,4 @@
-﻿namespace ProjectTransportes.Helper
+﻿namespace ProjectTransportes.Helpers
 {
     public class HelperTools
     {

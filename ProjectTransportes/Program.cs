@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using ProjectTransportes.Data;
-using ProjectTransportes.Helper;
+using ProjectTransportes.Helpers;
 using ProjectTransportes.Repositories;var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(options =>
 {
@@ -28,7 +28,8 @@ builder.Services.AddSingleton<IHttpContextAccessor
     , HttpContextAccessor>();
 string connectionString = builder.Configuration.GetConnectionString("SqlHospital");
 builder.Services.AddSingleton<HelperPathProvider>();
-builder.Services.AddTransient<HelperUploadFiles>();
+builder.Services.AddSingleton<HelperMails>();
+builder.Services.AddSingleton<HelperUploadFiles>();
 builder.Services.AddTransient<RepositoryCoches>();
 builder.Services.AddDbContext<CochesContext>(options=>options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews(options => options.EnableEndpointRouting = false).AddSessionStateTempDataProvider();

@@ -65,7 +65,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProjectTransportes.Data;
-using ProjectTransportes.Helper;
+using ProjectTransportes.Helpers;
 using ProjectTransportes.Models;
 using System.Security.AccessControl;
 
@@ -269,7 +269,7 @@ namespace ProjectTransportes.Repositories
             coche.Puntuacion = valoracion;
             coche.TipoMovilidad = tipomovi;
             coche.Filtro = filtrocoche;
-            coche.Imagen = await this.helperUploadFiles.UploadFileAsync(imagen, Folders.Uploads); ;
+            coche.Imagen = await this.helperUploadFiles.UploadFileAsync(imagen, Folders.Uploads, coche.IdCoche); ;
             coche.EstadoCoche = true;
             coche.IdProvincia = provincia;
             coche.Asientos = asientos;

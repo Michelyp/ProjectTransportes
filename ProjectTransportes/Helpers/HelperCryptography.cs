@@ -1,7 +1,8 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace ProjectTransportes.Helper
+namespace ProjectTransportes.Helpers
+
 {
     public class HelperCryptography
     {

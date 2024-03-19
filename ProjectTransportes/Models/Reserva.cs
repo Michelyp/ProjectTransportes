@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectTransportes.Models
 {
+    [Table("RESERVA")]
     public class Reserva
     {
         [Key]

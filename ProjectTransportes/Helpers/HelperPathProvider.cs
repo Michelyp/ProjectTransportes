@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 
-namespace ProjectTransportes.Helper
+namespace ProjectTransportes.Helpers
 {
     public enum Folders { Uploads =0, Mails=1}
     public class HelperPathProvider
