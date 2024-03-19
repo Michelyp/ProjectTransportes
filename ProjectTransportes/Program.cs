@@ -26,7 +26,7 @@ builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IHttpContextAccessor
     , HttpContextAccessor>();
-string connectionString = builder.Configuration.GetConnectionString("SqlHospital");
+string connectionString = builder.Configuration.GetConnectionString("SqlTransportes");
 builder.Services.AddSingleton<HelperPathProvider>();
 builder.Services.AddSingleton<HelperMails>();
 builder.Services.AddSingleton<HelperUploadFiles>();

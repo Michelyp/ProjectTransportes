@@ -43,7 +43,8 @@ namespace ProjectTransportes.Controllers
         }
         public async Task<IActionResult> Reservas()
         {
-            return View();
+            List<ReservaVista> reservas = await this.repo.GetReservas();
+            return View(reservas);
         }
     }
 }

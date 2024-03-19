@@ -11,7 +11,7 @@
         public async Task<string> UploadFileAsync
             (IFormFile file, Folders folder,int id)
         {
-            string fileName = "img" + id + ".jpeg";
+            string fileName = file.FileName;
             string path =
                 this.helperPathProvider.MapPath(fileName, folder);
             using (Stream stream = new FileStream(path, FileMode.Create))

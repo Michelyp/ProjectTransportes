@@ -15,6 +15,7 @@ namespace ProjectTransportes.Data
         public DbSet<UsuarioVista> UsuarioVistas { get; set; }
         public DbSet<CocheVista> CocheVistas { get; set; }
         public DbSet<Reserva> Reservas { get; set; }
+        public DbSet<ReservaVista> ReservasVista { get; set; }
         public DbSet<Facturacion> Facturaciones { get; set; }
         public DbSet<TipoMovilidad> TipoMovilidad { get; set; }
         public DbSet<FiltroCoche> FiltroCoches { get; set; }

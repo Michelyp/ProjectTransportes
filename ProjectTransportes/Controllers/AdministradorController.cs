@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectTransportes.Filters;
 using ProjectTransportes.Models;
 using ProjectTransportes.Repositories;
 
@@ -16,16 +17,21 @@ namespace ProjectTransportes.Controllers
         {
             return View();
         }
+        [AuthorizeUsers]
         public IActionResult PanelAdmin()
         {
             return View();
         }
+        [AuthorizeUsers]
+
         public IActionResult AgregarCoche()
         {
             return View();
         }
 
         [HttpPost]
+        [AuthorizeUsers]
+
         public async Task<IActionResult> AgregarCoche(int modelo, int? valoracion, int tipomovi, int filtrocoche, IFormFile imagen, int provincia, int asientos, int maletas, int puertas, int precio)
         {
             await this.repo.CrearCocheAsync(modelo, valoracion, tipomovi, filtrocoche, imagen, provincia, asientos, maletas, puertas, precio);
@@ -37,6 +43,8 @@ namespace ProjectTransportes.Controllers
             return View();
         }
         [HttpPost]
+        [AuthorizeUsers]
+
         public async Task<IActionResult> CrearUsuario(string nombre, string apellido, string email, string password, int telefono)
         {
             await this.repo.RegisterUserAsync(nombre, apellido, email, password, telefono);
@@ -49,6 +57,8 @@ namespace ProjectTransportes.Controllers
             return View(usuario);
         }
         [HttpPost]
+        [AuthorizeUsers]
+
         public async Task<IActionResult> EditarUsuario(int id, string nombre, string apellido, string correo, string pass, int telefono, int idFacturacicon)
         {
             await this.repo.EditarUsuario(id, nombre, apellido, correo, pass, telefono, idFacturacicon);

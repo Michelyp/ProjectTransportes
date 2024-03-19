@@ -1,4 +1,8 @@
-﻿<section class="manage-form">
+﻿@model ReservaVista
+@{
+    ReservaVista reserva = (ReservaVista)ViewData["RESERVA"];
+}
+<section class="manage-form">
     <article class="left-section">
         <img src="~/images/iconos/manage-my-account.png" alt="Manage my account" />
     </article>
@@ -9,8 +13,8 @@
             Introduce tus datos para confirmar un presupuesto o para ver, cambiar o cancelar una reserva.
         </p>
 
-        <form>
-            <div>
+        <form method="post">
+            @* <div>
                 <label for="manage-form-email">
                     <span>Dirección de email</span>
                     <span class="error">*</span>
@@ -24,7 +28,7 @@
                 <span class="message">
                     Introduce la misma dirección de email que utilizaste para hacer la reserva del coche
                 </span>
-            </div>
+            </div> *@
 
             <div>
                 <label for="manage-form-number-reserve">
@@ -33,7 +37,7 @@
                 </label>
                 <div>
                     <div>
-                        <input id="manage-form-number-reserve" required>
+                        <input name="id" id="manage-form-number-reserve" required>
                         <div></div>
                     </div>
                 </div>
@@ -45,7 +49,32 @@
             <button>Buscar mi reserva</button>
         </form>
     </article>
+    @if (reserva != null)
+    {
+
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Esta es tu reserva</h5>
+                <h5 class="card-title">Tienes que recogerlo en: @reserva.Lugar</h5>
+                <h6 class="card-subtitle mb-2 text-muted">El conductor es: @reserva.Conductor</h6>
+                <p class="card-text">La fecha de recogida: @reserva.FechaRecogida</p>
+                <p class="card-text">La fecha de devolución: @reserva.FechaDevuelto</p>
+                <p class="card-text">La reserva se encunetra: @reserva.FechaDevuelto</p>
+                <a class="card-link" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
+
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1 style="color:forestgreen">
+            @ViewData["MENSAJE"]
+        </h1>
+    }
+    
 </section>
+
 <style>
     *,
     :before,

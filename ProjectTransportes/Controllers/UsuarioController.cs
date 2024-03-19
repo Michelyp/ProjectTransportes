@@ -28,8 +28,24 @@ namespace ProjectTransportes.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> GestionarReserva(int id)
+        {
+            ReservaVista reserva = await this.repo.FindReserva(id);
+            ViewData["RESERVA"] = reserva;
+            if(reserva!= null)
+            {
+                return View(reserva);
+            }
+            else
+            {
+                ViewData["MENSAJE"] = "No existe esa reserva o es incorrecto el número de referencia";
 
-            public async Task<IActionResult> PerfilUsuario(int id)
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> PerfilUsuario(int id)
         {
             //parsearlo porque devuelve un string
             //id= HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;

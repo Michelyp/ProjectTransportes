@@ -23,15 +23,15 @@
 
 //create view v_all_usuarios
 //as
-//	select USUARIOS.IDUSUARIO, USUARIOS.NOMBRE, USUARIOS.APELLIDO,
-//    USUARIOS.CORREO, USUARIOS.SALT, USUARIOS.PASS, USUARIOS.TELEFONO,
-//    ROLES.NOMBRE AS ROL, ESTADOUSUARIO.NOMBRE AS ESTADO
+//	select usuarios.idusuario, usuarios.nombre, usuarios.apellido,
+//    usuarios.correo, usuarios.salt, usuarios.pass, usuarios.telefono,
+//    roles.nombre as rol, estadousuario.nombre as estado
 
-//	from USUARIOS
-//	inner join ESTADOUSUARIO
-//	on USUARIOS.ESTADO  = ESTADOUSUARIO.IDESTADO
-//	inner join ROLES
-//	on USUARIOS.IDROL = ROLES.IDROL
+//	from usuarios
+//	inner join estadousuario
+//	on usuarios.estado  = estadousuario.idestado
+//	inner join roles
+//	on usuarios.idrol = roles.idrol
 //go
 
 
@@ -40,24 +40,24 @@
 //	select * from v_all_usuarios
 //go
 
-//create view V_RESERVAS_LISTA
+//create view v_reservas_lista
 //as
-//	select RESERVA.IDRESERVA, RESERVA.LUGAR,
-//    RESERVA.CONDUCTOR, RESERVA.HORAINICIAL, RESERVA.FECHARECOGIDA,
-//    RESERVA.FECHADEVOLUCION,
-//    RESERVA.HORAFINAL, COCHE.IDCOCHE AS COCHE, USUARIOS.NOMBRE,
-//    ESTADORESERVA.NOMBRE AS RESERVA
-//	from RESERVA
-//	left join COCHE
-//	on  RESERVA.IDCOCHE=  COCHE.IDCOCHE
-//	left join USUARIOS
-//	on  RESERVA.IDUSUARIO=  USUARIOS.IDUSUARIO
-//	left join ESTADORESERVA
-//	on RESERVA.IDESTADORESERVA = ESTADORESERVA.IDESTADO
+//	select reserva.idreserva, reserva.lugar,
+//    reserva.conductor, reserva.horainicial, reserva.fecharecogida,
+//    reserva.fechadevolucion,
+//    reserva.horafinal, coche.idcoche as coche, usuarios.nombre,
+//    estadoreserva.nombre as reserva
+//	from reserva
+//	left join coche
+//	on  reserva.idcoche=  coche.idcoche
+//	left join usuarios
+//	on  reserva.idusuario=  usuarios.idusuario
+//	left join estadoreserva
+//	on reserva.idestadoreserva = estadoreserva.idestado
 //go
-//create procedure SP_ALL_RESERVAS
+//create procedure sp_all_reservas
 //as
-//	select * from V_RESERVAS_LISTA
+//	select * from v_reservas_lista
 //go
 
 #endregion
@@ -245,20 +245,7 @@ namespace ProjectTransportes.Repositories
                 return await this.context.Coches.MaxAsync(Z => Z.IdCoche) + 1;
             }
         }
-        //Agregar nuevo Coche
-        //  SELECT TOP(1000) [IDCOCHE]
-        //,[IDMODELO]
-        //,[IDPUNTUACION]
-        //,[TIPOMOVILIDAD]
-        //,[IDFILTRO]
-        //,[IMAGEN]
-        //,[ESTADOCOCHE]
-        //,[IDPROVINCIA]
-        //,[ASIENTOS]
-        //,[MALETAS]
-        //,[PUERTAS]
-        //,[PRECIO]
-        //  FROM[transportes].[dbo].[COCHE]
+
         public async Task CrearCocheAsync(int modelo, int? valoracion, int tipomovi, int filtrocoche, IFormFile imagen, int provincia, int asientos, int maletas, int puertas, int precio)
         {
             
@@ -291,6 +278,12 @@ namespace ProjectTransportes.Repositories
             {
                 return await this.context.Reservas.MaxAsync(Z => Z.IdReserva) + 1;
             }
+        }
+        public async Task<List<ReservaVista>> GetReservas()
+        {
+            string sql = "sp_all_reservas";
+            var consulta = this.context.ReservasVista.FromSqlRaw(sql);
+            return await consulta.ToListAsync();
         }
         public async Task CrearReservaAsync(string lugar, string conductor, TimeSpan horainit, DateTime fechainit
             ,DateTime fechafinal, TimeSpan horafinal,int idcoche, int idusuario)
@@ -333,6 +326,17 @@ namespace ProjectTransportes.Repositories
             
             this.context.Facturaciones.Add(fact);
             await this.context.SaveChangesAsync();
+        }
+        public async Task<ReservaVista> FindReserva(int id)
+        {
+            return await this.context.ReservasVista.Where(z => z.IdReserva.Equals(id)).FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteReservaAsync(int id)
+        {
+            string sql = "DELETE FROM RESERVA WHERE IDRESERVA = @IDRESERVA";
+            SqlParameter pamId = new SqlParameter("@IDRESERVA", id);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamId);
         }
 
         #endregion
