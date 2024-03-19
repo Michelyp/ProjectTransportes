@@ -52,6 +52,11 @@ namespace ProjectTransportes.Controllers
             Usuario user = await this.repo.FindUsuario(id);
             return View();
         }
+        public async Task<IActionResult> Mensaje(int id)
+        {
+                     
+            return View();
+        }
         public async Task<IActionResult> Delete(int id)
         {
             await this.repo.DeleteUsuarioAsync(id);

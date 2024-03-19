@@ -61,7 +61,7 @@
                 <p class="card-text">La fecha de devolución: @reserva.FechaDevuelto</p>
                 <p class="card-text">La reserva se encunetra: @reserva.FechaDevuelto</p>
                 <a class="card-link" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
-
+                <a class="card-link" asp-route-id="@reserva.IdReserva" asp-controller="Usuario" asp-action="mensaje">Cancelar reserva</a>
 
             </div>
         </div>

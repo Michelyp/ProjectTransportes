@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using ProjectTransportes.Filters;
+using ProjectTransportes.Helpers;
 using ProjectTransportes.Models;
 using ProjectTransportes.Repositories;
+using System.IO;
 using System.Security.Claims;
 
 namespace ProjectTransportes.Controllers
@@ -11,11 +13,13 @@ namespace ProjectTransportes.Controllers
     {
         private RepositoryCoches repo;
         private IMemoryCache memoryCache;
+        private HelperMails helperMail;
 
-        public ReservasController(RepositoryCoches repo, IMemoryCache memoryCache)
+        public ReservasController(RepositoryCoches repo, IMemoryCache memoryCache, HelperMails helperMails)
         {
             this.repo = repo;
             this.memoryCache = memoryCache;
+            this.helperMail = helperMails;
         }
         [AuthorizeUsers]
         public async Task<IActionResult> Index(int id)
@@ -38,6 +42,7 @@ namespace ProjectTransportes.Controllers
             string lugar = memoryCache.Get<string>("PROVINCIA");
             int idcoche = memoryCache.Get<int>("IDCOCHE");
             await this.repo.CrearReservaAsync(lugar, nombre, horaInit, fechaInit, fechaFin, horaFin, idcoche, iduser);
+
             ViewData["MENSAJE"] = "Reserva registrado correctamente";
             return RedirectToAction("Index","Coches");
         }
