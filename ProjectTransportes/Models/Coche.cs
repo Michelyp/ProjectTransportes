@@ -24,13 +24,13 @@ namespace ProjectTransportes.Models
         public Boolean? EstadoCoche { get; set; }
         [Column("IDPROVINCIA")]
         public int IdProvincia { get; set; }
-        [Column("Asientos")]
-        public string Asientos { get; set; }
-        [Column("Maletas")]
+        [Column("ASIENTOS")]
+        public int Asientos { get; set; }
+        [Column("MALETAS")]
         public int? Maletas { get; set; }
-        [Column("Puertas")]
+        [Column("PUERTAS")]
         public int Puertas { get; set; }
-        [Column("Precio")]
+        [Column("PRECIO")]
         public int Precio { get; set; }
         
     }

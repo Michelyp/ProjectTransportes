@@ -20,6 +20,19 @@ namespace ProjectTransportes.Controllers
         {
             return View();
         }
+        public IActionResult AgregarCoche()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AgregarCoche(int modelo, int? valoracion, int tipomovi, int filtrocoche, IFormFile imagen, int provincia, int asientos, int maletas, int puertas, int precio)
+        {
+            await this.repo.CrearCocheAsync(modelo, valoracion, tipomovi, filtrocoche, imagen, provincia, asientos, maletas, puertas, precio);
+
+            return RedirectToAction("Coches", "Coches");
+
+        }
         public IActionResult CrearUsuario() {
             return View();
         }
@@ -42,6 +55,7 @@ namespace ProjectTransportes.Controllers
             return RedirectToAction("Usuarios", "Usuario");
 
         }
+
 
     }
 }

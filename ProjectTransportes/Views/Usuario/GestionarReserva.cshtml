@@ -1,0 +1,128 @@
+﻿<section class="manage-form">
+    <article class="left-section">
+        <img src="~/images/iconos/manage-my-account.png" alt="Manage my account" />
+    </article>
+    <article class="right-section">
+        <h1>Gestionar mi reserva</h1>
+
+        <p>
+            Introduce tus datos para confirmar un presupuesto o para ver, cambiar o cancelar una reserva.
+        </p>
+
+        <form>
+            <div>
+                <label for="manage-form-email">
+                    <span>Dirección de email</span>
+                    <span class="error">*</span>
+                </label>
+                <div>
+                    <div>
+                        <input id="manage-form-email" required>
+                        <div class="MBM_6f2d729b"></div>
+                    </div>
+                </div>
+                <span class="message">
+                    Introduce la misma dirección de email que utilizaste para hacer la reserva del coche
+                </span>
+            </div>
+
+            <div>
+                <label for="manage-form-number-reserve">
+                    <span>Número de referencia de la reserva</span>
+                    <span class="error">*</span>
+                </label>
+                <div>
+                    <div>
+                        <input id="manage-form-number-reserve" required>
+                        <div></div>
+                    </div>
+                </div>
+                <span class="message">
+                    Encontrarás el número de referencia de la reserva en tu email de confirmación (tendrá al menos 9 dígitos)
+                </span>
+            </div>
+
+            <button>Buscar mi reserva</button>
+        </form>
+    </article>
+</section>
+<style>
+    *,
+    :before,
+    :after {
+        border-width: 0;
+        border-style: solid;
+        border-color: #e7e7e7;
+        box-sizing: border-box;
+    }
+
+    .manage-form {
+        display: flex;
+        row-gap: 24px;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .manage-form .left-section img {
+            width: 100%;
+            max-width: 444px;
+        }
+
+        .manage-form .right-section {
+            width: 100%;
+            padding: 16px;
+            display: grid;
+            row-gap: 16px;
+            max-width: 444px;
+            border-radius: 8px;
+            border: 1px solid #e7e7e7;
+        }
+
+            .manage-form .right-section h1,
+            .manage-form .right-section p {
+                margin: 0;
+                padding: 0;
+            }
+
+            .manage-form .right-section h1 {
+                font-size: 24px;
+            }
+
+            .manage-form .right-section form {
+                display: grid;
+                row-gap: 16px;
+            }
+
+            .manage-form .right-section input {
+                width: 100%;
+                font-size: 14px;
+                padding: 8px 4px;
+                border-radius: 4px;
+                border: 1px solid #1a1a1a;
+            }
+
+            .manage-form .right-section .message {
+                font-size: 12px;
+                color: #474747;
+            }
+
+            .manage-form .right-section .error {
+                color: #d4111e;
+            }
+
+            .manage-form .right-section button {
+                width: 100%;
+                color: #fff;
+                font-size: 14px;
+                cursor: pointer;
+                padding: 10px 4px;
+                border-radius: 4px;
+                background-color: #068323;
+                transition: transform 300ms ease;
+            }
+
+                .manage-form .right-section button:active {
+                    transform: scale(0.98);
+                    transition: transform 200ms ease;
+                }
+</style>

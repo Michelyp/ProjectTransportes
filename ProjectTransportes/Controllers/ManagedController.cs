@@ -40,10 +40,16 @@ namespace ProjectTransportes.Controllers
 
                 Claim claimName = new Claim(ClaimTypes.Name, user.Nombre);
                 identity.AddClaim(claimName);
+                Claim claimApellido = new Claim("Apellido", user.Apellido);
+                identity.AddClaim(claimApellido);
+                Claim claimCorreo = new Claim("Correo", user.Correo);
+                identity.AddClaim(claimCorreo);
                 Claim claimIdentifier = new Claim(ClaimTypes.NameIdentifier, user.IdUsuario.ToString());
                 identity.AddClaim(claimIdentifier);
                 Claim claimIdRol = new Claim(ClaimTypes.Role, user.IdRol.ToString());
                 identity.AddClaim(claimIdRol);
+                Claim claimTelefono = new Claim("Telefono", user.Telefono.ToString());
+                identity.AddClaim(claimTelefono);
                 ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal);
 

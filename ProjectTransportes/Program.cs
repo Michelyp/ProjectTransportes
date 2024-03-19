@@ -28,6 +28,7 @@ builder.Services.AddSingleton<IHttpContextAccessor
     , HttpContextAccessor>();
 string connectionString = builder.Configuration.GetConnectionString("SqlHospital");
 builder.Services.AddSingleton<HelperPathProvider>();
+builder.Services.AddTransient<HelperUploadFiles>();
 builder.Services.AddTransient<RepositoryCoches>();
 builder.Services.AddDbContext<CochesContext>(options=>options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews(options => options.EnableEndpointRouting = false).AddSessionStateTempDataProvider();

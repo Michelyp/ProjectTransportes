@@ -24,8 +24,12 @@ namespace ProjectTransportes.Controllers
         {
             return View();
         }
+        public IActionResult GestionarReserva()
+        {
+            return View();
+        }
 
-        public async Task<IActionResult> PerfilUsuario(int id)
+            public async Task<IActionResult> PerfilUsuario(int id)
         {
             //parsearlo porque devuelve un string
             //id= HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;

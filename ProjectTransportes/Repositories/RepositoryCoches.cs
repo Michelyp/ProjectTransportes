@@ -76,9 +76,11 @@ namespace ProjectTransportes.Repositories
         //Va haber una lista con los coches cuando le de
         //buscar se buscara por el lugar o la zona
         private CochesContext context;
-        public RepositoryCoches(CochesContext context)
+        private HelperUploadFiles helperUploadFiles;
+        public RepositoryCoches(CochesContext context, HelperUploadFiles helperUploadFiles)
         {
             this.context = context;
+            this.helperUploadFiles = helperUploadFiles;
         }
         #region COCHES
         public async Task<List<CocheVista>> GetCoches()
@@ -97,17 +99,6 @@ namespace ProjectTransportes.Repositories
             List<CocheVista> coches = await this.context.CocheVistas.Where(x => x.EstadoCoche == true).ToListAsync();
             return coches;
         }
-        private async Task<int> GetMaxIdCocheAsync()
-        {
-            if (this.context.Coches.Count() == 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return await this.context.Coches.MaxAsync(Z => Z.IdCoche) + 1;
-            }
-        }
         public async Task<CocheVista> FindCoche(int id)
         {
             return await this.context.CocheVistas.Where(z => z.IdCoche.Equals(id)).FirstOrDefaultAsync();
@@ -118,22 +109,7 @@ namespace ProjectTransportes.Repositories
             SqlParameter pamId = new SqlParameter("@IDCOCHE", id);
             await this.context.Database.ExecuteSqlRawAsync(sql, pamId);
         }
-        public async Task CrearCocheAsync(string nombre, string apellido, string email, string password, int telefono)
-        {
-            Usuario user = new Usuario();
-            user.IdUsuario = await this.GetMaxIdCocheAsync();
-            user.Nombre = nombre;
-            user.Apellido = apellido;
-            user.Correo = email;
-            user.Salt = HelperTools.GenerateSalt();
-            user.Password = HelperCryptography.EncryptPassword(password, user.Salt);
-            user.Telefono = telefono;
-            user.IdRol = 2;
-            user.IdFacturacion = 1;
-            user.EstadoUsuario = 1;
-            this.context.Usuarios.Add(user);
-            await this.context.SaveChangesAsync();
-        }
+        
 
         #endregion
         #region USUARIOS
@@ -213,21 +189,18 @@ namespace ProjectTransportes.Repositories
       //,[ESTADO]
         public async Task EditarUsuario(int id, string nombre, string apellido,string correo, string pass,int telefono,  int idFacturacicon)
         {
-            string sql = "UPDATE USUARIOS SET NOMBRE= @NOMBRE, APELLIDO=@APELLIDO, CORREO= @CORREO, SALT = @SALT, PASS = @PASS, TELEFONO=@TELEFONO" +
-                ",IDFACTURACION=@IDFACTURACION WHERE IDUSUARIO = @IDUSUARIO";
-
-            SqlParameter pamId = new SqlParameter("@IDUSUARIO", id);
-            SqlParameter pamNombre = new SqlParameter("@NOMBRE", nombre);
-            SqlParameter pamApellido = new SqlParameter("@APELLIDO", apellido);
-            SqlParameter pamEmail = new SqlParameter("@CORREO", correo);
+           Usuario user = await this.FindUsuario(id);
+            user.Nombre = nombre;
+            user.Apellido = apellido;
+            user.Correo = correo;
             string salt = HelperTools.GenerateSalt();
             byte[] password = HelperCryptography.EncryptPassword(pass, salt);
-            SqlParameter pamSalt = new SqlParameter("@SALT", salt);
-            SqlParameter pamPass = new SqlParameter("@PASS", password);
-            SqlParameter pamTelefono = new SqlParameter("@TELEFONO", telefono);
-            SqlParameter pamIdFacturacion= new SqlParameter("@IDFACTURACION", idFacturacicon);
-
-            this.context.Database.ExecuteSqlRawAsync(sql, pamNombre, pamApellido, pamEmail, pamSalt, pamPass, pamTelefono, pamIdFacturacion,pamId);
+            user.Salt = salt;
+            user.Password = password;
+            user.Telefono = telefono;
+            user.IdFacturacion=idFacturacicon;
+            user.EstadoUsuario = 1;
+            await context.SaveChangesAsync();
         }
         
         public async Task DeleteUsuarioAsync(int id)
@@ -236,13 +209,41 @@ namespace ProjectTransportes.Repositories
             SqlParameter pamId = new SqlParameter("@IDUSUARIO", id);
             await this.context.Database.ExecuteSqlRawAsync(sql, pamId);
         }
-
-
-
         public async Task<List<Reserva>> GetRervas()
         {
             List<Reserva> reservas = this.context.Reservas.ToList();
             return reservas;
+        }
+        public async Task<List<Marca>> GetMarcas()
+        {
+            List<Marca> marcas = this.context.Marcas.ToList();
+            return marcas;
+        }
+        public async Task<List<Modelo>> GetModelos()
+        {
+            List<Modelo> modelos = this.context.Modelos.ToList();
+            return modelos;
+        }
+        public async Task<List<FiltroCoche>> GetFiltroCoches()
+        {
+            List<FiltroCoche> filtroCoches = this.context.FiltroCoches.ToList();
+            return filtroCoches;
+        }
+        public async Task<List<TipoMovilidad>> GetTipoMovilidad()
+        {
+            List<TipoMovilidad> tipoMovilidad = this.context.TipoMovilidad.ToList();
+            return tipoMovilidad;
+        }
+        private async Task<int> GetMaxIdCocheAsync()
+        {
+            if (this.context.Coches.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return await this.context.Coches.MaxAsync(Z => Z.IdCoche) + 1;
+            }
         }
         //Agregar nuevo Coche
         //  SELECT TOP(1000) [IDCOCHE]
@@ -258,7 +259,26 @@ namespace ProjectTransportes.Repositories
         //,[PUERTAS]
         //,[PRECIO]
         //  FROM[transportes].[dbo].[COCHE]
-
+        public async Task CrearCocheAsync(int modelo, int? valoracion, int tipomovi, int filtrocoche, IFormFile imagen, int provincia, int asientos, int maletas, int puertas, int precio)
+        {
+            
+                
+            Coche coche = new Coche();
+            coche.IdCoche = await this.GetMaxIdCocheAsync();
+            coche.IdModelo = modelo;
+            coche.Puntuacion = valoracion;
+            coche.TipoMovilidad = tipomovi;
+            coche.Filtro = filtrocoche;
+            coche.Imagen = await this.helperUploadFiles.UploadFileAsync(imagen, Folders.Uploads); ;
+            coche.EstadoCoche = true;
+            coche.IdProvincia = provincia;
+            coche.Asientos = asientos;
+            coche.Maletas = maletas;
+            coche.Puertas = puertas;
+            coche.Precio = precio;
+            this.context.Coches.AddAsync(coche);
+            await this.context.SaveChangesAsync();
+        }
         #endregion
         #region RESERVAS
         private async Task<int> GetMaxIdReservaAsync()
@@ -273,7 +293,7 @@ namespace ProjectTransportes.Repositories
             }
         }
         public async Task CrearReservaAsync(string lugar, string conductor, TimeSpan horainit, DateTime fechainit
-            ,DateTime fechafinal, TimeSpan horafinal,int idcoche, int idusuario, int estadoreserva)
+            ,DateTime fechafinal, TimeSpan horafinal,int idcoche, int idusuario)
         {
             Reserva reser = new Reserva();
             reser.IdReserva = await this.GetMaxIdReservaAsync();

@@ -18,7 +18,7 @@ namespace ProjectTransportes.Helper
             string carpeta = "";
             if(folder == Folders.Uploads)
             {
-                carpeta = "uploads";
+                carpeta = "images/uploads";
             }
             else if(folder ==Folders.Mails)
             {

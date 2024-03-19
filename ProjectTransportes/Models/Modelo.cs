@@ -8,9 +8,11 @@ namespace ProjectTransportes.Models
     public class Modelo
     {
         [Key]
-        [Column("IDMARCA")]
-        public int IdMarca { get; set; }
+        [Column("IDMODELO")]
+        public int IdModelo { get; set; }
         [Column("NOMBRE")]
         public string Nombre { get; set; }
+        [Column("IDMARCA")]
+        public int IdMarca { get; set; }
     }
 }

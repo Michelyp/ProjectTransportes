@@ -3,14 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectTransportes.Models
 {
-    [Table("TIPOMOVILIDAD")]
-
-    public class TipoMovilidad
+   [Table("FILTROCOCHE")]
+    public class FiltroCoche
     {
-
         [Key]
-        [Column("IDTIPO")]
-        public int IdTipo { get; set; }
+        [Column("IDFILTRO")]
+        public int IdFiltro { get; set; }
         [Column("NOMBRE")]
         public string Nombre { get; set; }
     }

@@ -1,7 +1,8 @@
 ﻿<!-- MultiStep Form -->
 <div class="row">
     <div class="col-md-12 col-md-offset-3">
-        <form id="msform" method="post">
+        <form id="msform" asp-controller="Reservas"
+              asp-action="Index" method="post">
             <!-- progressbar -->
             <ul id="progressbar">
                 <li class="active">Información</li>
@@ -17,11 +18,12 @@
             </fieldset>
             <fieldset>
                 <h2 class="fs-title">Dirección de la facturación</h2>
-                <input type="text" name="nombre" placeholder="Nombre" />
-                <input type="text" name="direccion" placeholder="Dirección" />
-                <input type="text" name="ciudad" placeholder="Ciudad" />
-                <input type="text" name="codigopostal" placeholder="Código Postal" />
-                <input type="text" name="pais" placeholder="País" />
+                <input type="text" name="nombre" placeholder="Nombre conductor" required/>
+                <input type="text" name="nombreUsuario" placeholder="Nombre Usuario" required />
+                <input type="text" name="direccion" placeholder="Dirección" required />
+                <input type="text" name="ciudad" placeholder="Ciudad" required />
+                <input type="text" name="codigopostal" placeholder="Código Postal" required />
+                <input type="text" name="pais" placeholder="País" required />
                 <input type="button" name="previous" class="previous action-button-previous" value="Anterior" />
                 <input type="button" name="next" class="next action-button" value="Siguiente" />
             </fieldset>
@@ -29,11 +31,18 @@
                 <h2 class="fs-title">Método de pago</h2>
                 <partial name="_PartialStep3" />
                 <input type="button" name="previous" class="previous action-button-previous" value="Anterior" />
+                @* <a class="submit"  asp-controller="Reservas"
+                   asp-action="Index" >
+                    Enviar
+                </a>  *@
                 <input type="submit" name="submit" class="submit action-button" value="Enviar" />
             </fieldset>
         </form>
     </div>
 </div>
+<h1 style="color:rebeccapurple">
+    @ViewData["MENSAJE"]
+</h1>
 <style>
     body {
         font-family: Montserrat, arial, verdana;
@@ -280,8 +289,5 @@
             });
         });
 
-        $(".submit").click(function(){
-            return false;
-        });
     </script>
 }
