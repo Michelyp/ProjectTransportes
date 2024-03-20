@@ -10,12 +10,14 @@
                     </div>
                     <div class="ms-auto d-flex">
                         <div class="input-group input-group-sm ms-auto me-2">
+                            <form id="buscarReservasForm">
                             <span class="input-group-text text-body">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
                                 </svg>
                             </span>
-                            <input type="text" class="form-control form-control-sm" placeholder="Search">
+                            <input type="text" name="buscarReservas" class="form-control form-control-sm" placeholder="Search">
+                            </form>
                         </div>
                         <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0 me-2">
                             <span class="btn-inner--icon">
@@ -28,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body px-0 py-0">
+            <div id="tabla" class="card-body px-0 py-0">
                 <div class="table-responsive p-0">
                     <table class="table align-items-center justify-content-center mb-0">
                         <thead class="bg-gray-100">
@@ -49,9 +51,7 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex px-2">
-                                            <div class="avatar avatar-sm rounded-circle bg-gray-100 me-2 my-2">
-                                                <img src="../assets/img/small-logos/logo-spotify.svg" class="w-80" alt="spotify">
-                                            </div>
+                                            
                                             <div class="my-auto">
                                                 <h6 class="mb-0 text-sm">@item.Lugar</h6>
                                             </div>
@@ -110,23 +110,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="border-top py-3 px-3 d-flex align-items-center">
-                    <button class="btn btn-sm btn-white d-sm-block d-none mb-0">Previous</button>
-                    <nav aria-label="..." class="ms-auto">
-                        <ul class="pagination pagination-light mb-0">
-                            <li class="page-item active" aria-current="page">
-                                <span class="page-link font-weight-bold">1</span>
-                            </li>
-                            <li class="page-item"><a class="page-link border-0 font-weight-bold" href="javascript:;">2</a></li>
-                            <li class="page-item"><a class="page-link border-0 font-weight-bold d-sm-inline-flex d-none" href="javascript:;">3</a></li>
-                            <li class="page-item"><a class="page-link border-0 font-weight-bold" href="javascript:;">...</a></li>
-                            <li class="page-item"><a class="page-link border-0 font-weight-bold d-sm-inline-flex d-none" href="javascript:;">8</a></li>
-                            <li class="page-item"><a class="page-link border-0 font-weight-bold" href="javascript:;">9</a></li>
-                            <li class="page-item"><a class="page-link border-0 font-weight-bold" href="javascript:;">10</a></li>
-                        </ul>
-                    </nav>
-                    <button class="btn btn-sm btn-white d-sm-block d-none mb-0 ms-auto">Next</button>
-                </div>
             </div>
         </div>
     </div>
@@ -137,3 +120,28 @@
         margin-top: 5%;
     }
 </style>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#buscarReservasForm').on('submit', function (e) {
+                e.preventDefault(); // Previene el envío del formulario de la manera tradiciona
+                $.ajax({
+                    url: '/Reservas/BuscarReservas', // Asegúrate de que esta URL coincida con la acción de tu controlador
+                    type: 'POST',
+                    data: $(this).serialize(), // Serializa los datos del formulario
+                    success: function (data) {
+                        $('#tabla').html(data); // Actualiza el contenido del div con los resultados de la búsqueda
+                    },
+                    console.log("");
+                    error: function () {
+                        alert('Error al realizar la búsqueda.');
+                    }
+                }).done(function (data) {
+                    // Manejo de éxito
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error en la llamada AJAX: " + textStatus + ", " + errorThrown);
+                });;
+            });
+        });
+    </script>
+}

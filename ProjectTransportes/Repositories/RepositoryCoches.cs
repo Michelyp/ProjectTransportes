@@ -103,6 +103,10 @@ namespace ProjectTransportes.Repositories
         {
             return await this.context.CocheVistas.Where(z => z.IdCoche.Equals(id)).FirstOrDefaultAsync();
         }
+        public async Task<Coche> FindCocheAsync(int id)
+        {
+            return await this.context.Coches.Where(z => z.IdCoche.Equals(id)).FirstOrDefaultAsync();
+        }
         public async Task DeleteCocheAsync(int id)
         {
             string sql = "DELETE FROM COCHE WHERE IDCOCHE = @IDCOCHE";
@@ -178,15 +182,6 @@ namespace ProjectTransportes.Repositories
             var consulta = this.context.UsuarioVistas.FromSqlRaw(sql);
             return await consulta.ToListAsync();
         }
-      //  ,[NOMBRE]
-      //,[APELLIDO]
-      //,[CORREO]
-      //,[SALT]
-      //,[PASS]
-      //,[TELEFONO]
-      //,[IDROL]
-      //,[IDFACTURACION]
-      //,[ESTADO]
         public async Task EditarUsuario(int id, string nombre, string apellido,string correo, string pass,int telefono,  int idFacturacicon)
         {
            Usuario user = await this.FindUsuario(id);
@@ -202,8 +197,23 @@ namespace ProjectTransportes.Repositories
             user.EstadoUsuario = 1;
             await context.SaveChangesAsync();
         }
-        
-        public async Task DeleteUsuarioAsync(int id)
+        public async Task EditarCoche(int id,int modelo, int? valoracion, int tipomovi, int filtrocoche, IFormFile imagen, int provincia, int asientos, int maletas, int puertas, int precio)
+        {
+            Coche coche = await this.FindCocheAsync(id);
+            coche.IdModelo = modelo;
+            coche.Puntuacion = valoracion;
+            coche.TipoMovilidad = tipomovi;
+            coche.Filtro = filtrocoche;
+            coche.Imagen = await this.helperUploadFiles.UploadFileAsync(imagen, Folders.Uploads, coche.IdCoche); ;
+            coche.EstadoCoche = true;
+            coche.IdProvincia = provincia;
+            coche.Asientos = asientos;
+            coche.Maletas = maletas;
+            coche.Puertas = puertas;
+            coche.Precio = precio;
+            await this.context.SaveChangesAsync();
+        }
+            public async Task DeleteUsuarioAsync(int id)
         {
             string sql = "DELETE FROM USUARIOS WHERE IDUSUARIO = @IDUSUARIO";
             SqlParameter pamId = new SqlParameter("@IDUSUARIO", id);
@@ -248,8 +258,7 @@ namespace ProjectTransportes.Repositories
 
         public async Task CrearCocheAsync(int modelo, int? valoracion, int tipomovi, int filtrocoche, IFormFile imagen, int provincia, int asientos, int maletas, int puertas, int precio)
         {
-            
-                
+                         
             Coche coche = new Coche();
             coche.IdCoche = await this.GetMaxIdCocheAsync();
             coche.IdModelo = modelo;
@@ -327,10 +336,31 @@ namespace ProjectTransportes.Repositories
             this.context.Facturaciones.Add(fact);
             await this.context.SaveChangesAsync();
         }
+        [HttpPost
+            ]
+        public async Task<List<ReservaVista>> BuscadorReservas(string buscarReservas)
+        {
+            List<ReservaVista> reservas = await this.context.ReservasVista.Where(x => x.NombreUsuario.Contains(buscarReservas)).ToListAsync();
+
+            return reservas;
+
+        }
         public async Task<ReservaVista> FindReserva(int id)
         {
             return await this.context.ReservasVista.Where(z => z.IdReserva.Equals(id)).FirstOrDefaultAsync();
         }
+        public async Task<Reserva> FindReservaAsync(int id)
+        {
+            return await this.context.Reservas.Where(z => z.IdReserva.Equals(id)).FirstOrDefaultAsync();
+        }
+        public async Task CancelarReservaAsync(int id)
+        {
+            Reserva reserva=  await this.context.Reservas.Where(z => z.IdReserva.Equals(id)).FirstOrDefaultAsync();
+            reserva.IdEstadpReserva = 3;
+            await this.context.SaveChangesAsync();
+ 
+        }
+
 
         public async Task DeleteReservaAsync(int id)
         {

@@ -1,5 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model ReservaVista
+<div class="container">
+@* 	<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 edit_information">
+		<form method="post">
+			<h3 class="text-center">Editar usuario</h3>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="form-group">
+					<input type="hidden" name="id" class="form-control" value="@Model.IdUsuario" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group">
+						<label class="profile_details_text">Nombre:</label>
+						<input type="text" name="nombre" class="form-control" value="@Model.Nombre" required>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group">
+						<label class="profile_details_text">Apellido: </label>
+						<input type="text" name="apellido" class="form-control" value="@Model.Apellido" required>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label class="profile_details_text">Email:</label>
+						<input type="email" name="correo" class="form-control" value="@Model.Correo" required>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label class="profile_details_text">Contraseña:</label>
+						<input type="password" name="pass" class="form-control" value="@Model.Password">
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label class="profile_details_text">Teléfono:</label>
+						<input type="number" name="telefono" class="form-control" value="@Model.Telefono" required pattern=[0-9]{10}>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label class="profile_details_text">Id Facturación:</label>
+						<input type="number" name="idFacturacicon" class="form-control" value="@Model.IdFacturacion" required>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
+					<div class="form-group">
+						<input type="submit" class="btn btn-success" value="Enviar">
+					</div>
+				</div>
+			</div>
+		</form>
+	</div> *@
+</div>
+<style>
+	.container {
+		margin-left: 15%;
+		margin-top: 1.7rem;
+	}
+</style>

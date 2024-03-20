@@ -14,23 +14,7 @@
         </p>
 
         <form method="post">
-            @* <div>
-                <label for="manage-form-email">
-                    <span>Dirección de email</span>
-                    <span class="error">*</span>
-                </label>
                 <div>
-                    <div>
-                        <input id="manage-form-email" required>
-                        <div class="MBM_6f2d729b"></div>
-                    </div>
-                </div>
-                <span class="message">
-                    Introduce la misma dirección de email que utilizaste para hacer la reserva del coche
-                </span>
-            </div> *@
-
-            <div>
                 <label for="manage-form-number-reserve">
                     <span>Número de referencia de la reserva</span>
                     <span class="error">*</span>
@@ -49,6 +33,7 @@
             <button>Buscar mi reserva</button>
         </form>
     </article>
+    @ViewData["MENSAJERESERVA"];
     @if (reserva != null)
     {
 
@@ -59,9 +44,9 @@
                 <h6 class="card-subtitle mb-2 text-muted">El conductor es: @reserva.Conductor</h6>
                 <p class="card-text">La fecha de recogida: @reserva.FechaRecogida</p>
                 <p class="card-text">La fecha de devolución: @reserva.FechaDevuelto</p>
-                <p class="card-text">La reserva se encunetra: @reserva.FechaDevuelto</p>
+                <p class="card-text">La reserva se encuentra: @reserva.ReservaEstado</p>
                 <a class="card-link" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
-                <a class="card-link" asp-route-id="@reserva.IdReserva" asp-controller="Usuario" asp-action="mensaje">Cancelar reserva</a>
+                <a class="card-link" asp-route-id="@reserva.IdReserva" asp-controller="Usuario" asp-action="Cancelar">Cancelar reserva</a>
 
             </div>
         </div>

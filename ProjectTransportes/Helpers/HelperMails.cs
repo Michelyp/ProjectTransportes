@@ -12,7 +12,7 @@ namespace ProjectTransportes.Helpers
             this.configuration = configuration;
         }
 
-        private MailMessage ConfigureMailMessage
+        private async Task<MailMessage> ConfigureMailMessage
             (string para, string asunto, string mensaje)
         {
             MailMessage mail = new MailMessage();
@@ -60,7 +60,7 @@ namespace ProjectTransportes.Helpers
             (string para, string asunto, string mensaje)
         {
             //CREAR UN MAIL CON LAS COSAS
-            MailMessage mail = this.ConfigureMailMessage(para, asunto, mensaje);
+            MailMessage mail = await this.ConfigureMailMessage(para, asunto, mensaje);
             //CONFIGURAR SMTP
             SmtpClient smtp = this.ConfigureSmtpClient();
             //ENVIAMOS EL MAIL
@@ -71,7 +71,7 @@ namespace ProjectTransportes.Helpers
             (string para, string asunto, string mensaje, string pathAttachment)
         {
             //CREAR UN MAIL CON LAS COSAS
-            MailMessage mail = this.ConfigureMailMessage(para, asunto, mensaje);
+            MailMessage mail = await this.ConfigureMailMessage(para, asunto, mensaje);
             //CREAMOS UN ADJUNTO
             Attachment attachment = new Attachment(pathAttachment);
             mail.Attachments.Add(attachment);

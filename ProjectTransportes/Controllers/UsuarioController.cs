@@ -52,10 +52,11 @@ namespace ProjectTransportes.Controllers
             Usuario user = await this.repo.FindUsuario(id);
             return View();
         }
-        public async Task<IActionResult> Mensaje(int id)
+        public async Task<IActionResult> Cancelar(int id)
         {
-                     
-            return View();
+            await this.repo.CancelarReservaAsync(id);
+                ViewData["MENSAJERESERVA"] = "Se ha cancelado la reserva";
+             return RedirectToAction("GestionarReserva", "Usuario");
         }
         public async Task<IActionResult> Delete(int id)
         {

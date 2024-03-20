@@ -43,7 +43,7 @@ namespace ProjectTransportes.Controllers
             int idcoche = memoryCache.Get<int>("IDCOCHE");
             await this.repo.CrearReservaAsync(lugar, nombre, horaInit, fechaInit, fechaFin, horaFin, idcoche, iduser);
 
-            ViewData["MENSAJE"] = "Reserva registrado correctamente";
+            TempData["MENSAJE"] = "Reserva registrado correctamente";
             return RedirectToAction("Index","Coches");
         }
         public async Task<IActionResult> Reservas()
@@ -56,5 +56,12 @@ namespace ProjectTransportes.Controllers
             await this.repo.DeleteReservaAsync(id);
             return RedirectToAction("Reservas", "Reservas");
         }
+        [HttpPost]
+        public async Task<IActionResult> BuscarReservas(string buscarReservas)
+        {
+            List<ReservaVista> reservas = await this.repo.BuscadorReservas(buscarReservas);
+            return View(reservas);
+        }
+        
     }
 }

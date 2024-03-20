@@ -65,6 +65,19 @@ namespace ProjectTransportes.Controllers
             return RedirectToAction("Usuarios", "Usuario");
 
         }
+        public async Task<IActionResult> EditarCoche(int id)
+        {
+            Coche coche = await this.repo.FindCocheAsync(id);
+            return View(coche);
+        }
+        [HttpPost]
+        [AuthorizeUsers]
+        public async Task<IActionResult> EditarCoche( int id,int modelo, int? valoracion, int tipomovi, int filtrocoche, IFormFile imagen, int provincia, int asientos, int maletas, int puertas, int precio)
+        {
+            await this.repo.EditarCoche(id,modelo, valoracion, tipomovi, filtrocoche, imagen, provincia, asientos, maletas, puertas, precio);
+            return RedirectToAction("Coches", "Coches");
+
+        }
 
 
     }
